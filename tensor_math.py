@@ -108,4 +108,4 @@ abs_x0 = torch.abs(x0)      #取绝对值
 indices = torch.argmax(x0,dim=0)        #返回值为最大值位置
 indices = torch.argmin(x0,dim=0)        #返回值为最小值位置
 mean_x0 = torch.mean(x0,dim=0)      #某方向平均值
-z = torch.eq(x,y)       #判断相应位置是否相同
+z = torch.eq(x,y)       #比较x,y相应位置是否相同
