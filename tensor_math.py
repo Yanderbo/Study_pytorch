@@ -107,5 +107,14 @@ values,indices = torch.min(x0,dim=0)     ##values 为最小值，indices 为最�
 abs_x0 = torch.abs(x0)      #取绝对值
 indices = torch.argmax(x0,dim=0)        #返回值为最大值位置
 indices = torch.argmin(x0,dim=0)        #返回值为最小值位置
-mean_x0 = torch.mean(x0,dim=0)      #某方向平均值
+mean_x0 = torch.mean(x0.float(),dim=0)      #某方向平均值,取平均值之前更改为浮点型
 z = torch.eq(x,y)       #比较x,y相应位置是否相同
+
+A = torch.tensor([[4,2,5,8,1],
+                  [4,2,5,1,6]])
+sorted_A,indices = torch.sort(A,dim=0,descending=False)     #sorted_A是排序后的数列，indices是原来的下标
+                                                            #descending决定是否降序
+x = torch.tensor([1,0,1,1,1],dtype=torch.bool)
+z = torch.any(x)        #是否是True,有一个就返回True
+z = torch.all(x)        #是否全是True，全True返回True，反之false
+print(z)
