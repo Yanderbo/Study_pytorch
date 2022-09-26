@@ -114,6 +114,7 @@ A = torch.tensor([[4,2,5,8,1],
                   [4,2,5,1,6]])
 sorted_A,indices = torch.sort(A,dim=0,descending=False)     #sorted_A是排序后的数列，indices是原来的下标
                                                             #descending决定是否降序
+z = torch.clamp(x,min=0,max=10)     #规定最大值最小值范围，超过范围的变成最大最小值
 x = torch.tensor([1,0,1,1,1],dtype=torch.bool)
 z = torch.any(x)        #是否是True,有一个就返回True
 z = torch.all(x)        #是否全是True，全True返回True，反之false
