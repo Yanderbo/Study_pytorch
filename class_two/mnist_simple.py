@@ -3,14 +3,12 @@
 #========================================================================
 
 #Imports
-import imp
-from random import shuffle
-from turtle import forward
+from traceback import print_tb
 import torch
 import torch.nn as nn       
 import torch.optim as optim     #优化算法，一些损失函数
 import torch.nn.functional as F    #像relu等函数
-from torch.utils.data import dataloader     
+from torch.utils.data import DataLoader     
 import torchvision.datasets as datasets     #含有一些数据集
 import torchvision.transforms as transforms     #矩阵转置
 
@@ -37,12 +35,12 @@ batch_size = 64     #批大小
 num_epochs = 1      #循环次数
 
 #Load Data
-train_dataset = datasets.MNIST(root="MNIST_dara/",train=True,transform=transforms.ToTensor(),download=True)
+train_dataset = datasets.MNIST(root="MNIST_data/",train=True,transform=transforms.ToTensor(),download=True)
 #root 下载数据集保存地址 train 是否为训练集 transforms 下载的为numpy型，转化为张量 download = true 下载数据集
-train_loader = dataloader(datasets=train_dataset,batch_size=64,shuffle=True)
+train_loader = DataLoader(dataset=train_dataset,batch_size=64,shuffle=True)
 #shuffle=True 每次打乱数据集
-test_dataset = datasets.MNIST(root="MNIST_dara/",train=False,transform=transforms.ToTensor(),download=True)
-test_loader = dataloader(datasets=test_dataset,batch_size=64,shuffle=True)
+test_dataset = datasets.MNIST(root="MNIST_data/",train=False,transform=transforms.ToTensor(),download=True)
+test_loader = DataLoader(dataset=test_dataset,batch_size=64,shuffle=True)
 
 #Initialize network
 model = NN(input_size=input_size,num_classes=num_classes).to(device)
@@ -90,9 +88,9 @@ def check_accuracy(loader,model):
             scores = model(x)
             _,predictions = scores.max(1)       #在第一维度（看每一行）最大值
             num_correct += (predictions == y).sum()     #看索引即可
-            num_samples = predictions.size(0)
+            num_samples += predictions.size(0)
 
-        print(f'Got {num_correct} / {num_samples} with accuracy {float(num_classes)/float(num_samples)*100:.2f}')
+        print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct) / num_samples *100:.2f}')
 
     model.train()
 
