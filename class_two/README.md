@@ -12,5 +12,5 @@ Got 9609 / 10000 with accuracy 96.09</p>
 <p>将RNN改成GRU准确率为：</br>
 Got 59439 / 60000 with accuracy 99.06</br>
 Got 9879 / 10000 with accuracy 98.79</p>
-<i>也可将RNN改为LSTM</i>
-image.png
+<i>也可将RNN改为LSTM</i></r>
+<img src="lstm_c0.png">
