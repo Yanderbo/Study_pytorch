@@ -17,3 +17,6 @@ Got 9879 / 10000 with accuracy 98.79</p>
 <h2>BRNN:双向</h2>
 <i>链接输入乘2</i>
 <img src="BRNN.jpg">
+<h2>保存，下载状态</h2>
+<img src="checkpoint.png">
+<img src="checkpoint1.png">
