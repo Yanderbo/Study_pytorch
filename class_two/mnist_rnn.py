@@ -24,23 +24,40 @@ learning_rate = 0.001       #学习率
 batch_size = 64     #批大小
 num_epochs = 2      #循环次数
 
-#Creat a RNN
-class RNN(nn.Module):
+# #Creat a RNN
+# class RNN(nn.Module):
+#     def __init__(self,input_size,hidden_size,num_layers,num_classes):
+#         super(RNN,self).__init__()
+#         self.hidden_size = hidden_size
+#         self.num_layers = num_layers
+#         self.rnn = nn.RNN(input_size,hidden_size,num_layers,batch_first=True)
+#         self.fc = nn.Linear(hidden_size*sequence_length,num_classes)
+
+#     def forward(self,x):
+#         h0 = torch.zeros(self.num_layers,x.size(0),self.hidden_size).to(device)
+
+#         out, _ = self.rnn(x,h0)
+#         out = out.reshape(out.shape[0],-1)
+#         out = self.fc(out)
+#         return out
+
+#Creat a bidirectional LSTM
+class BRNN(nn.Module):
     def __init__(self,input_size,hidden_size,num_layers,num_classes):
-        super(RNN,self).__init__()
+        super(BRNN,self).__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        self.rnn = nn.RNN(input_size,hidden_size,num_layers,batch_first=True)
-        self.fc = nn.Linear(hidden_size*sequence_length,num_classes)
+        self.lstm = nn.LSTM(input_size,hidden_size,num_layers,batch_first=True,bidirectional=True)
+        self.fc = nn.Linear(hidden_size*2,num_classes)
 
     def forward(self,x):
-        h0 = torch.zeros(self.num_layers,x.size(0),self.hidden_size).to(device)
+        h0 = torch.zeros(self.num_layers*2,x.size(0),self.hidden_size).to(device)
+        c0 = torch.zeros(self.num_layers*2,x.size(0),self.hidden_size).to(device)
 
-        out, _ = self.rnn(x,h0)
-        out = out.reshape(out.shape[0],-1)
-        out = self.fc(out)
+        out, _ = self.lstm(x,(h0,c0))
+        out = self.fc(out[:,-1,:])
+
         return out
-
 
 #Load Data
 train_dataset = datasets.MNIST(root="MNIST_data/",train=True,transform=transforms.ToTensor(),download=True)
@@ -52,7 +69,7 @@ test_loader = DataLoader(dataset=test_dataset,batch_size=64,shuffle=True)
 
 #Initialize network
 # model = NN(input_size=input_size,num_classes=num_classes).to(device)      #用NN简单模型
-model = RNN(input_size,hidden_size,num_layers,num_classes).to(device)
+model = BRNN(input_size,hidden_size,num_layers,num_classes).to(device)
 
 #Loss and optimizer
 criterion = nn.CrossEntropyLoss()       #loss函数

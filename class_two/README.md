@@ -14,3 +14,6 @@ Got 59439 / 60000 with accuracy 99.06</br>
 Got 9879 / 10000 with accuracy 98.79</p>
 <i>也可将RNN改为LSTM</i></r>
 <img src="lstm_c0.png">
+<h2>BRNN:双向</h2>
+<i>链接输入乘2</i>
+<img src="BRNN.jpg">
