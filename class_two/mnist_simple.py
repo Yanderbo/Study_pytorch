@@ -68,6 +68,13 @@ def load_checkpoint(checkpoint):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 #Load Data
+
+#划分数据集
+#train_dataset,test_dataset = torch.utils.data.random_split(dataset,[n,m]) #n,m为具体数值
+#train_loader = DataLoader(dataset=train_dataset,batch_size=64,shuffle=True)
+#test_loader = DataLoader(dataset=test_dataset,batch_size=64,shuffle=True)
+
+
 train_dataset = datasets.MNIST(root="MNIST_data/",train=True,transform=transforms.ToTensor(),download=True)
 #root 下载数据集保存地址 train 是否为训练集 transforms 下载的为numpy型，转化为张量 download = true 下载数据集
 train_loader = DataLoader(dataset=train_dataset,batch_size=64,shuffle=True)
